@@ -12,19 +12,6 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:showIn="@layout/activity_main"
         tools:context="com.leeeeo.mydict.MainActivity">
-
-    <!--<EditText android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/search_content"-->
-    <!--android:hint="请输入你要查询的内容:"-->
-    <!--android:autoText="true"-->
-    <!--android:layout_marginTop="80dp"-->
-    <!--android:layout_alignParentTop="true" android:layout_alignParentLeft="true"-->
-    <!--android:layout_alignParentStart="true" android:layout_marginLeft="23dp"-->
-    <!--android:layout_marginStart="23dp"/>-->
-    <!--<Button style="?android:attr/buttonStyleSmall" android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content" android:text="查询" android:id="@+id/btn_get_value"-->
-    <!--android:layout_marginRight="25dp" android:layout_marginEnd="25dp"-->
-    <!--android:layout_alignBottom="@+id/search_content" android:layout_alignParentRight="true"-->
-    <!--android:layout_alignParentEnd="true"/>-->
     <EditText
             android:id="@+id/edit"
             android:layout_width="fill_parent"
