@@ -41,9 +41,9 @@ public class MainUI extends RelativeLayout {
         middleMenu = new FrameLayout(context);
         rightMenu = new FrameLayout(context);
         middleMask = new FrameLayout(context);
-        leftMenu.setBackgroundColor(Color.RED);
-        middleMenu.setBackgroundColor(Color.GREEN);
-        rightMenu.setBackgroundColor(Color.RED);
+        leftMenu.setBackgroundColor(Color.BLACK);
+        middleMenu.setBackgroundColor(Color.WHITE);
+        rightMenu.setBackgroundColor(Color.BLACK);
         middleMask.setBackgroundColor(0x88000000);
         leftMenu.setId(LEFT_ID);
         middleMenu.setId(MIDEELE_ID);
@@ -77,7 +77,7 @@ public class MainUI extends RelativeLayout {
         middleMask.measure(widthMeasureSpec, heightMeasureSpec);
         int realWidth = MeasureSpec.getSize(widthMeasureSpec);
         int tempWidthMeasure = MeasureSpec.makeMeasureSpec(
-                (int) (realWidth * 0.5f), MeasureSpec.EXACTLY);
+                (int) (realWidth * 0.6f), MeasureSpec.EXACTLY);
         leftMenu.measure(tempWidthMeasure, heightMeasureSpec);
         rightMenu.measure(tempWidthMeasure, heightMeasureSpec);
     }
