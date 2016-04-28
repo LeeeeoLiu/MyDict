@@ -10,7 +10,8 @@
 　　权限设置（用于网络连接和获取网络状态时的权限）  
 　　学习模块（包括用户单词学习模块、复习模块及测试模块）  
 # IDE
-　　IntelliJ IDEA 2016.1.1
+　　开发：IntelliJ IDEA 2016.1.1  
+　　建议调试：Android Studio
 　　
 # Me
 　　*[Leeeeo](http://www.leeeeo.com)*
