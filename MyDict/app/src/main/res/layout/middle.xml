@@ -16,22 +16,17 @@
     </LinearLayout>
     <FrameLayout
             android:layout_width="172dp"
-            android:layout_height="229dp">
-        <TextView
-                android:id="@+id/button3"
+            android:layout_height="229dp" android:layout_gravity="right">
+        <Button
+                android:id="@+id/button4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="学习单词" android:layout_gravity="center_horizontal|bottom"/>
-        <TextView
-                android:id="@+id/button2"
+        <Button
+                android:id="@+id/button5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="词库导出" android:layout_gravity="center"/>
-        <TextView
-                android:id="@+id/button1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="词库导入" android:layout_gravity="center_horizontal|top"/>
     </FrameLayout>
 
 

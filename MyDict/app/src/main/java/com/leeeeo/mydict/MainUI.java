@@ -41,7 +41,7 @@ public class MainUI extends RelativeLayout {
         middleMenu = new FrameLayout(context);
         rightMenu = new FrameLayout(context);
         middleMask = new FrameLayout(context);
-        leftMenu.setBackgroundColor(Color.BLACK);
+        leftMenu.setBackgroundColor(Color.GRAY);
         middleMenu.setBackgroundColor(Color.WHITE);
         rightMenu.setBackgroundColor(Color.BLACK);
         middleMask.setBackgroundColor(0x88000000);
@@ -53,6 +53,7 @@ public class MainUI extends RelativeLayout {
         addView(rightMenu);
         addView(middleMask);
         middleMask.setAlpha(0);
+
     }
 
     public float onMiddleMask(){
