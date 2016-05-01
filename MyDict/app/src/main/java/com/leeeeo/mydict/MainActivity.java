@@ -1,14 +1,10 @@
 package com.leeeeo.mydict;
 
-import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
+import android.content.Intent;
 import android.os.Bundle;
-import android.os.Environment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.ListView;
-import android.widget.Toast;
 
 import java.io.*;
 
@@ -21,14 +17,15 @@ public class MainActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        Intent intent=new Intent(this,ListenNetStateService.class);
+        startService(intent);
+
         String DB_PATH = "/data/data/com.leeeeo.mydict/databases/";
         String DB_NAME = "question.db";
 
-        if(!(new File(DB_PATH + DB_NAME).exists()))
-        {
+        if (!(new File(DB_PATH + DB_NAME).exists())) {
             File dir = new File(DB_PATH);
-            if (!dir.exists())
-            {
+            if (!dir.exists()) {
                 dir.mkdir();
             }
 
@@ -38,8 +35,7 @@ public class MainActivity extends AppCompatActivity {
                 byte[] buffer = new byte[1024];
                 int length;
 
-                while((length = is.read(buffer)) > 0)
-                {
+                while ((length = is.read(buffer)) > 0) {
                     os.write(buffer, 0, length);
                 }
                 os.flush();
@@ -50,39 +46,39 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        //		Db db = new Db(this);
-//		SQLiteDatabase dbWrite = db.getWritableDatabase();
-//
-//		ContentValues cv = new ContentValues();
-//		cv.put("name", "小张");
-//		cv.put("sex", "男");
-//		dbWrite.insert("user", null, cv);
-//
-//		cv = new ContentValues();
-//		cv.put("name", "小李");
-//		cv.put("sex", "女");
-//		dbWrite.insert("user", null, cv);
-//
-//		dbWrite.close();
-
-//		SQLiteDatabase dbRead = db.getReadableDatabase();
-//		Cursor c = dbRead.query("user", null, null, null, null, null, null);
-//
-//		while(c.moveToNext()){
-//			String name = c.getString(c.getColumnIndex("name"));
-//			String sex = c.getString(c.getColumnIndex("sex"));
-//			System.out.println(String.format("name=%s,sex=%s", name,sex));
-//		}
-
-        mainUI=new MainUI(this);
+        mainUI = new MainUI(this);
         setContentView(mainUI);
-        leftMenu=new LeftMenu();
-        middle=new Middle();
+        leftMenu = new LeftMenu();
+        middle = new Middle();
         getSupportFragmentManager().beginTransaction().add(MainUI.LEFT_ID, leftMenu).commit();
-        getSupportFragmentManager().beginTransaction().add(MainUI.MIDEELE_ID,middle).commit();
-//        setContentView(R.layout.activity_main);
+        getSupportFragmentManager().beginTransaction().add(MainUI.MIDEELE_ID, middle).commit();
+
     }
 
-
+    private void showDialog(Context context, String title, String content) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+//        builder.setIcon(R.drawable.icon);
+        builder.setTitle(title);
+        builder.setMessage(content);
+//        builder.setPositiveButton("Button1",
+//                new DialogInterface.OnClickListener() {
+//                    public void onClick(DialogInterface dialog, int whichButton) {
+//                        setTitle("点击了对话框上的Button1");
+//                    }
+//                });
+//        builder.setNeutralButton("Button2",
+//                new DialogInterface.OnClickListener() {
+//                    public void onClick(DialogInterface dialog, int whichButton) {
+//                        setTitle("点击了对话框上的Button2");
+//                    }
+//                });
+//        builder.setNegativeButton("Button3",
+//                new DialogInterface.OnClickListener() {
+//                    public void onClick(DialogInterface dialog, int whichButton) {
+//                        setTitle("点击了对话框上的Button3");
+//                    }
+//                });
+        builder.show();
+    }
 }
 

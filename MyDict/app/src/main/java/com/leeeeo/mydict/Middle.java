@@ -87,6 +87,12 @@ public class Middle extends Fragment {
         @Override
         public void onClick(View v) {
 
+
+
+
+
+
+
             if ("".equals(edit.getText().toString().trim())) {
                 Toast.makeText(getActivity().getApplicationContext(), "请输入单词后在点击", Toast.LENGTH_SHORT).show();
 
