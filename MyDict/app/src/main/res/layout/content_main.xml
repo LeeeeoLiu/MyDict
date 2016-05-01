@@ -17,24 +17,28 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:hint="输入你要查询的内容......"
-            android:layout_marginTop="35dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" android:layout_toLeftOf="@+id/search"
-            android:layout_toStartOf="@+id/search"/>
+            android:layout_marginTop="38dp"
+            android:layout_alignParentTop="true" android:layout_centerHorizontal="true"/>
 
     <Button
             android:id="@+id/search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="查询"
-            android:layout_alignTop="@+id/edit" android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"/>
+            android:layout_below="@+id/edit" android:layout_alignRight="@+id/trans_result"
+            android:layout_alignEnd="@+id/trans_result" android:layout_marginRight="51dp"
+            android:layout_marginEnd="51dp"/>
     <TextView
             android:layout_width="350dp"
             android:layout_height="469dp"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:id="@+id/trans_result"
-            android:layout_gravity="center_horizontal" android:layout_below="@+id/edit"
-            android:layout_alignParentRight="true" android:layout_alignParentEnd="true"/>
+            android:layout_gravity="center_horizontal"
+            android:layout_alignParentRight="true" android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true" android:layout_below="@+id/search"/>
+    <Button android:id="@+id/btn_addtobook" android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_below="@+id/edit" android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" android:layout_marginLeft="42dp" android:layout_marginStart="42dp"
+            android:text="加入生词本" android:visibility="visible" android:enabled="false"/>
 
 </RelativeLayout>

@@ -27,7 +27,9 @@ public class ReviewwordsFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		Log.d("=====>", "ReviewwordsFragment onCreateView");
-		return inflater.inflate(R.layout.frg_reviewwords, container, false);
+		View v=inflater.inflate(R.layout.activity_notebook, container, false);
+
+        return v;
 	}
 	
 	@Override

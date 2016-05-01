@@ -6,14 +6,23 @@
     android:orientation="vertical" >
 
     <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="179dp"
-        android:layout_marginRight="27dp"
-        android:text="测试已学单词"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="测试已学单词"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_marginTop="66dp"
+            android:layout_alignParentTop="true" android:layout_centerHorizontal="true"/>
+    <TextView android:id="@+id/textView2" android:layout_width="wrap_content" android:layout_height="wrap_content"
+              android:text="准备好就点击下方按钮开始吧!" android:textAppearance="?android:attr/textAppearanceLarge"
+              android:layout_marginTop="61dp"
+              android:layout_below="@+id/textView1" android:layout_centerHorizontal="true"/>
+    <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="开始测试"
+            android:id="@+id/btn_test"
+            android:layout_marginTop="127dp" android:layout_below="@+id/textView2"
+            android:layout_alignLeft="@+id/textView1" android:layout_alignStart="@+id/textView1"/>
 
 </RelativeLayout>

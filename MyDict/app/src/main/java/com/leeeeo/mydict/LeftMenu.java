@@ -26,7 +26,9 @@ public class LeftMenu extends Fragment {
         v.findViewById(R.id.button2).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity().getApplicationContext(), "词库导出", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getActivity().getApplicationContext(),Notebook.class);
+                startActivity(intent);
+                Toast.makeText(getActivity().getApplicationContext(), "生词本", Toast.LENGTH_SHORT).show();
             }
         });
         v.findViewById(R.id.button3).setOnClickListener(new OnClickListener() {

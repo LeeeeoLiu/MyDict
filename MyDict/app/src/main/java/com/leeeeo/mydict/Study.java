@@ -39,20 +39,20 @@ public class Study extends FragmentActivity {
                 LearnwordsFragment.class,
                 null);
         //2
-        tabHost.addTab(tabHost.newTabSpec("浏览生词本")
-                        .setIndicator("浏览生词本"),
-                ReviewwordsFragment.class,
-                null);
+//        tabHost.addTab(tabHost.newTabSpec("浏览生词本")
+//                        .setIndicator("浏览生词本"),
+//                ReviewwordsFragment.class,
+//                null);
         //3
         tabHost.addTab(tabHost.newTabSpec("测试已学单词")
                         .setIndicator("测试已学单词"),
                 TestwordsFragment.class,
                 null);
         //4
-        tabHost.addTab(tabHost.newTabSpec("待开发...")
-                        .setIndicator("待开发..."),
-                OthersFragment.class,
-                null);
+//        tabHost.addTab(tabHost.newTabSpec("待开发...")
+//                        .setIndicator("待开发..."),
+//                OthersFragment.class,
+//                null);
     }
 
     /**************************
