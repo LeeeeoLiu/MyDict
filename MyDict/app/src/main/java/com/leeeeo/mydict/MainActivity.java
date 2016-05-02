@@ -1,101 +1,85 @@
 package com.leeeeo.mydict;
 
-import android.util.Log;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.io.*;
 
 public class MainActivity extends AppCompatActivity {
-    private static final String WEATHER_LINK = "http://www.weather.com.cn/data/sk/101280101.html";
-    private RequestQueue mQueue;
-    EditText edit = null;
-    Button search = null;
-    TextView text = null;
-    String YouDaoBaseUrl = "http://fanyi.youdao.com/openapi.do";
-    String YouDaoKeyFrom = "Androiddictionary";
-    String YouDaoKey = "319821787";
-    String YouDaoType = "data";
-    String YouDaoDoctype = "json";
-    String YouDaoVersion = "1.1";
-    private TextView eText2;
-    String result;
+    private MainUI mainUI;
+    private LeftMenu leftMenu;
+    private Middle middle;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        eText2 = (TextView) findViewById(R.id.trans_result);
-        init();
-        mQueue = Volley.newRequestQueue(this);
-    }
 
-    private void init() {
-        edit = (EditText) findViewById(R.id.edit);
-        search = (Button) findViewById(R.id.search);
-        search.setOnClickListener(new searchListener());
-    }
+        Intent intent=new Intent(this,ListenNetStateService.class);
+        startService(intent);
 
-    private class searchListener implements View.OnClickListener {
-        @Override
-        public void onClick(View v) {
-            String YouDaoSearchContent = edit.getText().toString().trim();
-            String YouDaoUrl = YouDaoBaseUrl + "?keyfrom=" + YouDaoKeyFrom + "&key=" + YouDaoKey + "&type=" + YouDaoType + "&doctype="
-                    + YouDaoDoctype + "&type=" + YouDaoType + "&version=" + YouDaoVersion + "&q=" + YouDaoSearchContent;
-            URL url = null;
-            result = YouDaoSearchContent + (":\n");
+        String DB_PATH = "/data/data/com.leeeeo.mydict/databases/";
+        String DB_NAME = "question.db";
+
+        if (!(new File(DB_PATH + DB_NAME).exists())) {
+            File dir = new File(DB_PATH);
+            if (!dir.exists()) {
+                dir.mkdir();
+            }
+
             try {
-                url = new URL(YouDaoUrl);
-            } catch (MalformedURLException e) {
+                InputStream is = getBaseContext().getAssets().open(DB_NAME);
+                OutputStream os = new FileOutputStream(DB_PATH + DB_NAME);
+                byte[] buffer = new byte[1024];
+                int length;
+
+                while ((length = is.read(buffer)) > 0) {
+                    os.write(buffer, 0, length);
+                }
+                os.flush();
+                os.close();
+                is.close();
+            } catch (IOException e) {
                 e.printStackTrace();
             }
-            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(YouDaoUrl, null,
-                    new Response.Listener<JSONObject>() {
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            Log.d("TAG", response.toString());
-                            String mJSON = response.toString();
-                            try {
-                                result += ("基本释义:\n");
-                                JSONObject basic = response.getJSONObject("basic");
-                                JSONArray explains = basic.getJSONArray("explains");
-                                for (int i = 0; i < explains.length(); i++) {
-                                    result += explains.getString(i) + ("\n");
-                                }
-                                result += ("网络释义:");
-                                JSONArray web = response.getJSONArray("web");
-                                for (int i = 0; i < web.length(); i++) {
-                                    JSONObject w = web.getJSONObject(i);
-                                    result += ("\n") + w.getString("key");
-                                    result += ("\n") + w.getString("value");
-                                    result += ("\n-----------------------");
-                                }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                            eText2.setText(result);
-                        }
-                    }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Log.e("TAG", error.getMessage(), error);
-                }
-            });
-            mQueue.add(jsonObjectRequest);
         }
+
+        mainUI = new MainUI(this);
+        setContentView(mainUI);
+        leftMenu = new LeftMenu();
+        middle = new Middle();
+        getSupportFragmentManager().beginTransaction().add(MainUI.LEFT_ID, leftMenu).commit();
+        getSupportFragmentManager().beginTransaction().add(MainUI.MIDEELE_ID, middle).commit();
+
+    }
+
+    private void showDialog(Context context, String title, String content) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+//        builder.setIcon(R.drawable.icon);
+        builder.setTitle(title);
+        builder.setMessage(content);
+//        builder.setPositiveButton("Button1",
+//                new DialogInterface.OnClickListener() {
+//                    public void onClick(DialogInterface dialog, int whichButton) {
+//                        setTitle("点击了对话框上的Button1");
+//                    }
+//                });
+//        builder.setNeutralButton("Button2",
+//                new DialogInterface.OnClickListener() {
+//                    public void onClick(DialogInterface dialog, int whichButton) {
+//                        setTitle("点击了对话框上的Button2");
+//                    }
+//                });
+//        builder.setNegativeButton("Button3",
+//                new DialogInterface.OnClickListener() {
+//                    public void onClick(DialogInterface dialog, int whichButton) {
+//                        setTitle("点击了对话框上的Button3");
+//                    }
+//                });
+        builder.show();
     }
 }
 
