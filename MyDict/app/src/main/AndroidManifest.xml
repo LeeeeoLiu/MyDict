@@ -27,6 +27,7 @@
         <activity android:name=".ExamActivity"/>
         <activity android:name=".Notebook"/>
         <service android:name=".ListenNetStateService"/>
+        <activity android:name=".FileActivity"/>
     </application>
 
 </manifest>

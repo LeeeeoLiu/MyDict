@@ -13,6 +13,7 @@ public class MainActivity extends AppCompatActivity {
     private LeftMenu leftMenu;
     private Middle middle;
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

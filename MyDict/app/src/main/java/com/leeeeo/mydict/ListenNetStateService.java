@@ -13,6 +13,7 @@ import android.widget.Toast;
 public class ListenNetStateService extends Service {
     private ConnectivityManager connectivityManager;
     private NetworkInfo info;
+    private InternetStatus internetStatus=new InternetStatus(0);
 
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
 
@@ -28,8 +29,11 @@ public class ListenNetStateService extends Service {
                 if(info != null && info.isAvailable()) {
                     String name = info.getTypeName();
                     Toast.makeText(getApplicationContext(), "当前网络名称：" + name, Toast.LENGTH_SHORT).show();
+                    internetStatus.setStatus(1);
                 } else {
-                    Toast.makeText(getApplicationContext(), "没有可用网络", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "没有可用网络\n系统将开启离线查询,请确保已导入离线词库!", Toast.LENGTH_SHORT).show();
+                    internetStatus.setStatus(0);
+
                 }
             }
         }
