@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="导入本地词库"
+            android:id="@+id/btn_importlocal"
+            android:layout_above="@+id/btn_downloadocal" android:layout_centerHorizontal="true"
+            android:layout_marginBottom="67dp"/>
+    <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="下载离线词库"
+            android:id="@+id/btn_downloadocal"
+            android:layout_centerVertical="true" android:layout_centerHorizontal="true"/>
+    <ProgressBar
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/download_progress" android:layout_below="@+id/btn_downloadocal"
+            android:layout_centerHorizontal="true" android:layout_marginTop="40dp"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:id="@+id/download_message" android:layout_below="@+id/download_progress"
+            android:layout_centerHorizontal="true"/>
+</RelativeLayout>
