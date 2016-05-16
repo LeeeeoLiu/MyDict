@@ -3,7 +3,6 @@ package com.leeeeo.mydict;
 
 import android.app.AlertDialog;
 import android.app.ListActivity;
-import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -11,8 +10,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.SimpleCursorAdapter;
 
 public class Notebook extends ListActivity{
@@ -20,7 +17,7 @@ public class Notebook extends ListActivity{
 
 
     private SimpleCursorAdapter adapter;
-    private Db db;
+    private DB db;
     private SQLiteDatabase dbRead,dbWrite;
     private AdapterView.OnItemLongClickListener listViewItemLongClickListener=new AdapterView.OnItemLongClickListener() {
 
@@ -53,7 +50,7 @@ public class Notebook extends ListActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notebook);
 
-        db = new Db(this);
+        db = new DB(this);
         dbRead = db.getReadableDatabase();
         dbWrite = db.getWritableDatabase();
 

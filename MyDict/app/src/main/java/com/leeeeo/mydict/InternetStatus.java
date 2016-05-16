@@ -1,7 +1,6 @@
 package com.leeeeo.mydict;
 
 import android.app.Application;
-import android.content.Context;
 
 public class InternetStatus extends Application {
     private int status;

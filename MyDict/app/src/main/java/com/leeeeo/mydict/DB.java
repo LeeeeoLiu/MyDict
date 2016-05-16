@@ -4,9 +4,9 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-public class Db extends SQLiteOpenHelper {
+public class DB extends SQLiteOpenHelper {
 
-	public Db(Context context) {
+	public DB(Context context) {
 		super(context, "vocab", null, 1);
 	}
 
