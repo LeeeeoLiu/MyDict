@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/MyDict.iml" filepath="$PROJECT_DIR$/.idea/modules/MyDict.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/app.iml" />
+      <module fileurl="file:///Volumes/Projects/github/AndroidDict/MyDict/MyDict.iml" filepath="/Volumes/Projects/github/AndroidDict/MyDict/MyDict.iml" />
+      <module fileurl="file:///Volumes/Projects/github/AndroidDict/MyDict/app/app.iml" filepath="/Volumes/Projects/github/AndroidDict/MyDict/app/app.iml" />
     </modules>
   </component>
 </project>

@@ -1,13 +1,10 @@
 package com.leeeeo.mydict;
 
 import android.content.ContentValues;
-import android.content.Intent;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,11 +13,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -44,7 +43,7 @@ public class Middle extends Fragment {
     String Trans;
     private TextView eText2;
     String result;
-    private Db db;
+    private DB db;
     private SQLiteDatabase dbRead, dbWrite;
     private InternetStatus internetStatus;
 
@@ -60,7 +59,7 @@ public class Middle extends Fragment {
         v.findViewById(R.id.btn_addtobook).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                db = new Db(getActivity().getApplicationContext());
+                db = new DB(getActivity().getApplicationContext());
                 dbWrite = db.getWritableDatabase();
                 ContentValues cValue = new ContentValues();
                 cValue.put("word", edit.getText().toString().trim());

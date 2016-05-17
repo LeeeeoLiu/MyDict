@@ -1,0 +1,30 @@
+package com.leeeeo.mydict.activities;
+
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler;
+
+import com.leeeeo.mydict.R;
+
+/**
+ * Created by Jacob on 16/5/16.
+ * Email: Jacob.Deng@about-bob.com
+ */
+public class SplashActivity extends Activity {
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_splash);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(SplashActivity.this, MainTabActivity.class);
+                startActivity(intent);
+                SplashActivity.this.finish();
+            }
+        }, 2000);
+    }
+}
