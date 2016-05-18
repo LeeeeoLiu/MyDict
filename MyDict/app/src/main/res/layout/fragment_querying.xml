@@ -15,7 +15,6 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="38dp"
-        android:text="hello"
         android:hint="输入你要查询的内容......" />
 
     <Button
@@ -38,15 +37,6 @@
         android:layout_alignParentRight="true"
         android:layout_below="@+id/search"
         android:layout_gravity="center_horizontal"
-        android:text="hello	英[hə'ləʊ]
-美[həˈloʊ]
-int.	打招呼; 哈喽，喂; 你好，您好; 表示问候;
-n.	“喂”的招呼声或问候声;
-vi.	喊“喂”;
-[例句]Hello, Trish.
-你好，特里茜。
-[其他]	复数：hellos
-"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <Button
