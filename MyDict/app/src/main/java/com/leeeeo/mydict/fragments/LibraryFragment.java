@@ -34,7 +34,7 @@ public class LibraryFragment extends Fragment implements AdapterView.OnItemClick
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mainView = inflater.inflate(R.layout.fragment_library, container, false);
+        mainView = inflater.inflate(R.layout.fragment_setting, container, false);
         initSubViews();
         return mainView;
 

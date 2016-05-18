@@ -104,8 +104,9 @@
 
     </LinearLayout>
 
+
     <LinearLayout
-        android:id="@+id/id_tab_review"
+        android:id="@+id/id_tab_setting"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
@@ -117,44 +118,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="#00000000"
-            android:src="@mipmap/review"
+            android:src="@mipmap/setting"
             android:clickable="false"
             android:scaleType="fitXY" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="复习"
+            android:text="设置"
 
             android:textSize="13dp" />
 
     </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/id_tab_libaray"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="vertical">
-
-        <ImageView
-            android:id="@+id/tab_libaray_iv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="#00000000"
-            android:src="@mipmap/libaray"
-            android:clickable="false"
-            android:scaleType="fitXY" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="词库"
-
-            android:textSize="13dp" />
-
-    </LinearLayout>
-
 
 </LinearLayout>

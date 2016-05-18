@@ -31,7 +31,14 @@
         <activity android:name=".Notebook" />
 
         <service android:name=".ListenNetStateService" />
+
         <activity android:name=".FileActivity" />
+        <activity
+            android:name=".activities.ExportDictActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activities.ImportDictActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
