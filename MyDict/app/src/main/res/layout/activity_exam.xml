@@ -17,7 +17,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-            <TextView
+            <EditText
                     android:text="Hello"
                     android:id="@+id/question"
                     android:layout_width="match_parent"
@@ -29,7 +29,7 @@
                     android:layout_height="wrap_content">
 
                 <RadioButton
-                        android:text="您好!"
+                        android:text="打招呼; 哈喽，喂; 你好，您好; 表示问候"
                         android:id="@+id/answerA"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />

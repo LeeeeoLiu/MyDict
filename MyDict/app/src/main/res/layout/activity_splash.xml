@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="100dp"
-            android:text="EasyDict V1.0(Qinghe Tan)" />
+            android:text="EasyDict V1.2(Qinghe Tan)" />
 
     </LinearLayout>
 

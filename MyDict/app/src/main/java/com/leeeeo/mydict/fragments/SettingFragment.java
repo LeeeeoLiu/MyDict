@@ -1,5 +1,6 @@
 package com.leeeeo.mydict.fragments;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -26,7 +27,8 @@ public class SettingFragment extends Fragment implements AdapterView.OnItemClick
     private final static String TAG = SettingFragment.class.getSimpleName();
 
     private View mainView = null;
-    private TextView tvImport, tvExport, tvCleanLearning, tvCleanVerifying;
+    private TextView tvImport, tvExport, tvCleanLearning, tvCleanVerifying, tvSettingCurrentLib;
+
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -53,11 +55,14 @@ public class SettingFragment extends Fragment implements AdapterView.OnItemClick
         tvExport = (TextView) mainView.findViewById(R.id.tv_setting_lib_export);
         tvCleanLearning = (TextView) mainView.findViewById(R.id.tv_setting_clean_learn);
         tvCleanVerifying = (TextView) mainView.findViewById(R.id.tv_setting_clean_verify);
+        tvSettingCurrentLib = (TextView) mainView.findViewById(R.id.tv_setting_setcurrentlib);
+
 
         tvImport.setOnClickListener(this);
         tvExport.setOnClickListener(this);
         tvCleanVerifying.setOnClickListener(this);
         tvCleanLearning.setOnClickListener(this);
+        tvSettingCurrentLib.setOnClickListener(this);
     }
 
     @Override
@@ -65,12 +70,12 @@ public class SettingFragment extends Fragment implements AdapterView.OnItemClick
         switch (v.getId()) {
             case R.id.tv_setting_clean_learn:
                 EasyDictWordsManager.getInstance().clear();
-                WinToast.toast(AppEngine.getInstance().getCurrentContext(),"清除学习历史成功");
+                WinToast.toast(AppEngine.getInstance().getCurrentContext(), "清除学习历史成功");
                 break;
             case R.id.tv_setting_clean_verify:
                 //WhereCondition whereCondition = EasyDictWordsDao.Properties.
                 EasyDictWordsManager.getInstance().clear();
-                WinToast.toast(AppEngine.getInstance().getCurrentContext(),"清除测试历史成功");
+                WinToast.toast(AppEngine.getInstance().getCurrentContext(), "清除测试历史成功");
                 break;
             case R.id.tv_setting_lib_export:
                 Intent exportIntent = new Intent(getActivity(), ExportDictActivity.class);
@@ -80,8 +85,15 @@ public class SettingFragment extends Fragment implements AdapterView.OnItemClick
                 Intent importIntent = new Intent(getActivity(), ImportDictActivity.class);
                 startActivity(importIntent);
                 break;
+            case R.id.tv_setting_setcurrentlib:
+                showDialog();
+                break;
             default:
                 break;
         }
+    }
+
+    private void showDialog() {
+        new AlertDialog.Builder(getActivity()).setTitle("选择词库").setMultiChoiceItems(new String[]{"四级词汇", "六级词汇", "考研词汇"}, null, null).setPositiveButton("确定", null).setNegativeButton("取消", null).show();
     }
 }
