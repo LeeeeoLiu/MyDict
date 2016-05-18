@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="48dp"
+    android:orientation="horizontal">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tv_dict_name"
+
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="30dp"
+            android:gravity="center_vertical"
+            android:text="四级词汇"
+            android:textSize="15dp" />
+
+
+        <TextView
+            android:id="@+id/tv_dict_path"
+
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="/data/easydict/cet4.txt"
+            android:visibility="gone" />
+
+
+        <Button
+            android:id="@+id/btn_item_click"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="30dp"
+            android:gravity="center_vertical"
+            android:text="导入"
+            android:textAlignment="center"
+            android:textSize="15dp" />
+    </RelativeLayout>
+</LinearLayout>

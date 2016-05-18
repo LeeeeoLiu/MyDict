@@ -22,15 +22,15 @@
         android:id="@+id/search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/trans_result"
-        android:layout_alignRight="@+id/trans_result"
+        android:layout_alignEnd="@+id/query_result"
+        android:layout_alignRight="@+id/query_result"
         android:layout_below="@+id/edit"
         android:layout_marginEnd="51dp"
         android:layout_marginRight="51dp"
         android:hint="查询" />
 
     <TextView
-        android:id="@+id/trans_result"
+        android:id="@+id/query_result"
         android:layout_width="350dp"
         android:layout_height="469dp"
         android:layout_alignParentBottom="true"

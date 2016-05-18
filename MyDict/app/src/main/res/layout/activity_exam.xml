@@ -17,8 +17,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-            <TextView
-                    android:text="Question Desciption"
+            <EditText
+                    android:text="Hello"
                     android:id="@+id/question"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
@@ -29,22 +29,22 @@
                     android:layout_height="wrap_content">
 
                 <RadioButton
-                        android:text="AnswerA"
+                        android:text="打招呼; 哈喽，喂; 你好，您好; 表示问候"
                         android:id="@+id/answerA"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
                 <RadioButton
-                        android:text="AnswerB"
+                        android:text="地铁,地铁站:一种交通设施"
                         android:id="@+id/answerB"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
                 <RadioButton
-                        android:text="AnswerC"
+                        android:text="叔叔,一种称谓,长辈"
                         android:id="@+id/answerC"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
                 <RadioButton
-                        android:text="AnswerD"
+                        android:text="书信,一种文具用品"
                         android:id="@+id/answerD"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />

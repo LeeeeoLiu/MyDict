@@ -3,10 +3,12 @@ package com.leeeeo.mydict.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.TextView;
 
 import com.leeeeo.mydict.R;
 
@@ -18,6 +20,7 @@ public class LearningFragment extends Fragment implements AdapterView.OnItemClic
 
     private final static String TAG = LearningFragment.class.getSimpleName();
     private View mainView = null;
+    private TextView tv_content = null;
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -39,6 +42,15 @@ public class LearningFragment extends Fragment implements AdapterView.OnItemClic
     }
 
     private void initSubViews() {
-
+        tv_content = (TextView) mainView.findViewById(R.id.trans_result);
+        tv_content.setText(Html.fromHtml("<h1>hello</h1><hr><br/>英[hə'ləʊ]<br/><br/>" +
+                        "美[həˈloʊ]<br/><br/>" +
+                        "int.  打招呼; 哈喽，喂; 你好，您好; 表示问候;<br/><br/>" +
+                        "n. “喂”的招呼声或问候声;<br/><br/>" +
+                        "vi. 喊“喂”;<br/><br/>" +
+                        "[例句]Hello, Trish.<br/><br/>" +
+                        "你好，特里茜。<br/><br/>" +
+                        "[其他]  复数：hellos<br/><br/>"
+        ));
     }
 }

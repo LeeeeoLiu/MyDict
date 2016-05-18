@@ -11,10 +11,11 @@ import android.widget.TextView;
 
 import com.leeeeo.mydict.R;
 import com.leeeeo.mydict.adapters.ContentFragmentAdapter;
+import com.leeeeo.mydict.apps.AppEngine;
 import com.leeeeo.mydict.fragments.LearningFragment;
 import com.leeeeo.mydict.fragments.LibraryFragment;
 import com.leeeeo.mydict.fragments.QueryingFragment;
-import com.leeeeo.mydict.fragments.ReviewFragment;
+import com.leeeeo.mydict.fragments.SettingFragment;
 import com.leeeeo.mydict.fragments.VerifyingFragment;
 import com.leeeeo.mydict.views.CustomerViewPager;
 
@@ -38,9 +39,10 @@ public class MainTabActivity extends FragmentActivity implements ViewPager.OnPag
 
     private QueryingFragment queryingFragment;
     private LearningFragment learningFragment;
-    private ReviewFragment reviewFragment;
+
     private VerifyingFragment verifyingFragment;
     private LibraryFragment libraryFragment;
+    private SettingFragment settingFragment;
 
     private TextView topTitle;
     private ImageView backView;
@@ -50,13 +52,13 @@ public class MainTabActivity extends FragmentActivity implements ViewPager.OnPag
     private LinearLayout layout2;
     private LinearLayout layout3;
     private LinearLayout layout4;
-    private LinearLayout layout5;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maintab);
+        AppEngine.getInstance().setCurrentContext(this);
         initSubViews();
 
     }
@@ -65,20 +67,19 @@ public class MainTabActivity extends FragmentActivity implements ViewPager.OnPag
     private void initSubViews() {
 
         mViewPager = (CustomerViewPager) findViewById(R.id.viewpager_content);
+        mViewPager.addOnPageChangeListener(this);
 
         fragmentList = new ArrayList<Fragment>();
 
         queryingFragment = new QueryingFragment();
         learningFragment = new LearningFragment();
-        reviewFragment = new ReviewFragment();
+        settingFragment = new SettingFragment();
         verifyingFragment = new VerifyingFragment();
-        libraryFragment = new LibraryFragment();
 
         fragmentList.add(queryingFragment);
         fragmentList.add(learningFragment);
         fragmentList.add(verifyingFragment);
-        fragmentList.add(reviewFragment);
-        fragmentList.add(libraryFragment);
+        fragmentList.add(settingFragment);
 
         topTitle = (TextView) findViewById(R.id.top_menu_title);
         backView = (ImageView) findViewById(R.id.top_menu_back_btn);
@@ -87,15 +88,13 @@ public class MainTabActivity extends FragmentActivity implements ViewPager.OnPag
         layout1 = (LinearLayout) findViewById(R.id.id_tab_query);
         layout2 = (LinearLayout) findViewById(R.id.id_tab_learning);
         layout3 = (LinearLayout) findViewById(R.id.id_tab_verify);
-        layout4 = (LinearLayout) findViewById(R.id.id_tab_review);
-        layout5 = (LinearLayout) findViewById(R.id.id_tab_libaray);
+        layout4 = (LinearLayout) findViewById(R.id.id_tab_setting);
 
 
         layout1.setOnClickListener(this);
         layout2.setOnClickListener(this);
         layout3.setOnClickListener(this);
         layout4.setOnClickListener(this);
-        layout5.setOnClickListener(this);
 
         mContentFragmentAdapter = new ContentFragmentAdapter(getSupportFragmentManager(), fragmentList);
 
@@ -106,23 +105,25 @@ public class MainTabActivity extends FragmentActivity implements ViewPager.OnPag
 
     }
 
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.id_tab_query:
                 mViewPager.setCurrentItem(0);
+                topTitle.setText("查询单词");
                 break;
             case R.id.id_tab_learning:
                 mViewPager.setCurrentItem(1);
+                topTitle.setText("学习单词");
                 break;
             case R.id.id_tab_verify:
+                mViewPager.setCurrentItem(2);
+                topTitle.setText("单词测试");
+                break;
+            case R.id.id_tab_setting:
                 mViewPager.setCurrentItem(3);
-                break;
-            case R.id.id_tab_review:
-                mViewPager.setCurrentItem(4);
-                break;
-            case R.id.id_tab_libaray:
-                mViewPager.setCurrentItem(5);
+                topTitle.setText("系统设置");
                 break;
             default:
                 break;
@@ -137,7 +138,26 @@ public class MainTabActivity extends FragmentActivity implements ViewPager.OnPag
 
     @Override
     public void onPageSelected(int position) {
-
+        switch (position) {
+            case 0:
+                //mViewPager.setCurrentItem(0);
+                topTitle.setText("查询单词");
+                break;
+            case 1:
+                //mViewPager.setCurrentItem(1);
+                topTitle.setText("学习单词");
+                break;
+            case 2:
+                //mViewPager.setCurrentItem(2);
+                topTitle.setText("单词测试");
+                break;
+            case 3:
+                //mViewPager.setCurrentItem(3);
+                topTitle.setText("系统设置");
+                break;
+            default:
+                break;
+        }
     }
 
     @Override

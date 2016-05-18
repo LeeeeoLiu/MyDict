@@ -1,17 +1,17 @@
 package com.leeeeo.mydict.activities;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
 import com.leeeeo.mydict.R;
+import com.leeeeo.mydict.apps.BaseActivity;
 
 /**
  * Created by Jacob on 16/5/16.
  * Email: Jacob.Deng@about-bob.com
  */
-public class SplashActivity extends Activity {
+public class SplashActivity extends BaseActivity {
 
 
     @Override
