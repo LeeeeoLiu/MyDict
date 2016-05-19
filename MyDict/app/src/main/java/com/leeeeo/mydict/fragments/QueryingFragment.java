@@ -1,5 +1,7 @@
 package com.leeeeo.mydict.fragments;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -30,7 +32,7 @@ import java.net.URL;
  * Created by Jacob on 16/5/16.
  * Email:Jacob.Deng@about-bob.com
  */
-public class QueryingFragment extends Fragment implements AdapterView.OnItemClickListener {
+public class QueryingFragment extends Fragment implements AdapterView.OnItemClickListener, View.OnClickListener {
 
     private final static String TAG = QueryingFragment.class.getSimpleName();
     private View mainView = null;
@@ -38,7 +40,10 @@ public class QueryingFragment extends Fragment implements AdapterView.OnItemClic
     private TextView edit;
     private String result;
     private RequestQueue mQueue;
-    public String[] dictLibNames = new String[]{"四级词汇","六级词汇","考研词汇","生词本"};
+    private Button btnAddToNote;
+
+
+    public String[] dictLibNames = new String[]{"四级词汇", "六级词汇", "考研词汇", "生词本"};
 
     public QueryingFragment() {
     }
@@ -67,8 +72,20 @@ public class QueryingFragment extends Fragment implements AdapterView.OnItemClic
 
     }
 
+    private void showDialog() {
+        new AlertDialog.Builder(getActivity()).setTitle("选择添加到词库").setSingleChoiceItems(dictLibNames, -1, null).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        }).setNegativeButton("取消", null).show();
+    }
+
     private void initSubViews() {
         tv_query = (TextView) mainView.findViewById(R.id.query_result);
+        btnAddToNote = (Button) mainView.findViewById(R.id.btn_addtobook);
+        btnAddToNote.setOnClickListener(this);
+        btnAddToNote.setEnabled(false);
 //        tv_query.setText(Html.fromHtml("<h1>有道释义:</h1><hr><br/>英[hə'ləʊ]<br/><br/>" +
 //                "美[həˈloʊ]<br/><br/>" +
 //                "int.  打招呼; 哈喽，喂; 你好，您好; 表示问候;<br/><br/>" +
@@ -80,10 +97,19 @@ public class QueryingFragment extends Fragment implements AdapterView.OnItemClic
 //        ));
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_addtobook:
+                showDialog();
+                break;
+        }
+    }
+
     private class searchListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
-            edit= (TextView) mainView.findViewById(R.id.edit);
+            edit = (TextView) mainView.findViewById(R.id.edit);
             mQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
             String youDaoSearchContent = edit.getText().toString().trim();
             String youDaoBaseUrl = "http://fanyi.youdao.com/openapi.do";
@@ -109,22 +135,27 @@ public class QueryingFragment extends Fragment implements AdapterView.OnItemClic
                         public void onResponse(JSONObject response) {
                             try {
                                 JSONObject basic = response.getJSONObject("basic");
-                                result +=("英") + basic.getString("uk-phonetic") + ("<br/><br/>");
-                                result +=("美") + basic.getString("us-phonetic") + ("<br/><br/>");
+                                result += ("英") + basic.getString("uk-phonetic") + ("<br/><br/>");
+                                result += ("美") + basic.getString("us-phonetic") + ("<br/><br/>");
                                 JSONArray explains = basic.getJSONArray("explains");
                                 for (int i = 0; i < explains.length(); i++) {
                                     result += explains.getString(i) + (";<br/><br/>");
                                 }
+                                tv_query.setText(Html.fromHtml(result));
+                                btnAddToNote.setEnabled(true);
                             } catch (JSONException e) {
                                 e.printStackTrace();
+                                tv_query.setText(Html.fromHtml(result) + "没有查到相关词语~~~");
+                                btnAddToNote.setEnabled(false);
                             }
-                            tv_query.setText(Html.fromHtml(result));
-                            Log.e("result",result);
+
+                            Log.e("result", result);
                         }
                     }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     Log.e("TAG", error.getMessage(), error);
+                    btnAddToNote.setEnabled(false);
                 }
             });
             mQueue.add(jsonObjectRequest);
