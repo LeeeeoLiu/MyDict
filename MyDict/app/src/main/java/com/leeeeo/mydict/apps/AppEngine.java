@@ -49,6 +49,7 @@ public class AppEngine {
     public String getGlobalLibName() {
         String ret = SharedPreferencesHelper.getInstance(aplicationContext).getString("globalLibName");
         if (TextUtils.isEmpty(ret)) {
+            setGlobalLibName(dictLibNames[0]);
             return dictLibNames[0];
         }
         return ret;
