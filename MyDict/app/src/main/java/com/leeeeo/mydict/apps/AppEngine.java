@@ -2,6 +2,9 @@ package com.leeeeo.mydict.apps;
 
 import android.content.Context;
 import android.os.Environment;
+import android.text.TextUtils;
+
+import com.leeeeo.mydict.utils.SharedPreferencesHelper;
 
 import java.io.File;
 
@@ -12,10 +15,11 @@ import java.io.File;
 public class AppEngine {
 
     private static AppEngine instance = null;
-
+    public final static String[] dictLibNames = new String[]{"四级词汇", "六级词汇", "考研词汇", "生词本"};
     private Context aplicationContext;
     private Context currentContext;
     private Object daoSession = null;
+
 
     private AppEngine() {
 
@@ -38,6 +42,20 @@ public class AppEngine {
 
     public void init(Context context) {
         this.aplicationContext = context;
+
+    }
+
+
+    public String getGlobalLibName() {
+        String ret = SharedPreferencesHelper.getInstance(aplicationContext).getString("globalLibName");
+        if (TextUtils.isEmpty(ret)) {
+            return dictLibNames[0];
+        }
+        return ret;
+    }
+
+    public void setGlobalLibName(String name) {
+        SharedPreferencesHelper.getInstance(aplicationContext).putString("globalLibName", name);
     }
 
     public Context getCurrentContext() {
