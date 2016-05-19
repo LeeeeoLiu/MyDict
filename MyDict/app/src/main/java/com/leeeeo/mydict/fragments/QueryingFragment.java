@@ -38,6 +38,7 @@ public class QueryingFragment extends Fragment implements AdapterView.OnItemClic
     private TextView edit;
     private String result;
     private RequestQueue mQueue;
+    public String[] dictLibNames = new String[]{"四级词汇","六级词汇","考研词汇","生词本"};
 
     public QueryingFragment() {
     }
