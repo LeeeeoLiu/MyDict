@@ -20,6 +20,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.leeeeo.mydict.R;
+import com.leeeeo.mydict.models.EasyDictWords;
+import com.leeeeo.mydict.models.EasyDictWordsManager;
+import com.leeeeo.mydict.utils.WinToast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -41,9 +44,9 @@ public class QueryingFragment extends Fragment implements AdapterView.OnItemClic
     private String result;
     private RequestQueue mQueue;
     private Button btnAddToNote;
-
-
     public String[] dictLibNames = new String[]{"四级词汇", "六级词汇", "考研词汇", "生词本"};
+    private String currentLibName = dictLibNames[3];
+    private String currentDictExplains = "";
 
     public QueryingFragment() {
     }
@@ -73,10 +76,25 @@ public class QueryingFragment extends Fragment implements AdapterView.OnItemClic
     }
 
     private void showDialog() {
-        new AlertDialog.Builder(getActivity()).setTitle("选择添加到词库").setSingleChoiceItems(dictLibNames, -1, null).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+        new AlertDialog.Builder(getActivity()).setTitle("选择添加到词库").setSingleChoiceItems(dictLibNames, 3, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                currentLibName = dictLibNames[which];
+            }
+        }).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                EasyDictWords easyDictWords = new EasyDictWords();
+                easyDictWords.setName_lib(currentLibName);
+                easyDictWords.setExplains(currentDictExplains);
+                easyDictWords.setName_words(edit.getText().toString().trim());
 
+                try {
+                    EasyDictWordsManager.getInstance().create(easyDictWords);
+                    WinToast.toast(getActivity(), "单词添加成功!");
+                } catch (Exception e) {
+                    WinToast.toast(getActivity(),"单词已经添加到词库了!");
+                }
             }
         }).setNegativeButton("取消", null).show();
     }
@@ -134,14 +152,16 @@ public class QueryingFragment extends Fragment implements AdapterView.OnItemClic
                         @Override
                         public void onResponse(JSONObject response) {
                             try {
+                                String explainStr = "";
                                 JSONObject basic = response.getJSONObject("basic");
-                                result += ("英") + basic.getString("uk-phonetic") + ("<br/><br/>");
-                                result += ("美") + basic.getString("us-phonetic") + ("<br/><br/>");
+                                explainStr += ("英") + basic.getString("uk-phonetic") + ("<br/><br/>");
+                                explainStr += ("美") + basic.getString("us-phonetic") + ("<br/><br/>");
                                 JSONArray explains = basic.getJSONArray("explains");
                                 for (int i = 0; i < explains.length(); i++) {
-                                    result += explains.getString(i) + (";<br/><br/>");
+                                    explainStr += explains.getString(i) + (";<br/><br/>");
                                 }
-                                tv_query.setText(Html.fromHtml(result));
+                                currentDictExplains = explainStr;
+                                tv_query.setText(Html.fromHtml(result + explainStr));
                                 btnAddToNote.setEnabled(true);
                             } catch (JSONException e) {
                                 e.printStackTrace();

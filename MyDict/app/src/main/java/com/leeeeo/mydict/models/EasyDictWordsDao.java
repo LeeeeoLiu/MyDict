@@ -56,6 +56,9 @@ public class EasyDictWordsDao extends AbstractDao<EasyDictWords, Long> {
                 "\"ISLEARN\" INTEGER," + // 6: islearn
                 "\"DATA_LEARN\" INTEGER," + // 7: data_learn
                 "\"DATE_VERIFY\" INTEGER);"); // 8: date_verify
+        // Add Indexes
+        db.execSQL("CREATE UNIQUE INDEX " + constraint + "IDX_EASY_DICT_WORDS_NAME_LIB_NAME_WORDS ON EASY_DICT_WORDS" +
+                " (\"NAME_LIB\",\"NAME_WORDS\");");
     }
 
     /** Drops the underlying database table. */
