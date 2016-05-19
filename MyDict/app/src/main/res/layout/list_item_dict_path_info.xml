@@ -20,7 +20,6 @@
             android:text="四级词汇"
             android:textSize="15dp" />
 
-
         <TextView
             android:id="@+id/tv_dict_path"
 
@@ -28,7 +27,6 @@
             android:layout_height="match_parent"
             android:text="/data/easydict/cet4.txt"
             android:visibility="gone" />
-
 
         <Button
             android:id="@+id/btn_item_click"
