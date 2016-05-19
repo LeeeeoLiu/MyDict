@@ -6,7 +6,7 @@ package com.leeeeo.mydict.models;
  */
 public class EasyDictWords {
 
-    private long id;
+    private Long id;
     /** Not-null value. */
     private String name_lib;
     /** Not-null value. */
@@ -21,11 +21,11 @@ public class EasyDictWords {
     public EasyDictWords() {
     }
 
-    public EasyDictWords(long id) {
+    public EasyDictWords(Long id) {
         this.id = id;
     }
 
-    public EasyDictWords(long id, String name_lib, String name_words, String phonetic, String explains, String verify_status, Boolean islearn, java.util.Date data_learn, java.util.Date date_verify) {
+    public EasyDictWords(Long id, String name_lib, String name_words, String phonetic, String explains, String verify_status, Boolean islearn, java.util.Date data_learn, java.util.Date date_verify) {
         this.id = id;
         this.name_lib = name_lib;
         this.name_words = name_words;
@@ -37,11 +37,11 @@ public class EasyDictWords {
         this.date_verify = date_verify;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

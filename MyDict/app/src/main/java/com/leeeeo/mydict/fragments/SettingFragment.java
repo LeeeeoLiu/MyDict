@@ -1,6 +1,7 @@
 package com.leeeeo.mydict.fragments;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -27,8 +28,8 @@ public class SettingFragment extends Fragment implements AdapterView.OnItemClick
     private final static String TAG = SettingFragment.class.getSimpleName();
 
     private View mainView = null;
-    private TextView tvImport, tvExport, tvCleanLearning, tvCleanVerifying, tvSettingCurrentLib;
-
+    private TextView tvImport, tvExport, tvCleanLearning, tvCleanVerifying, tvSettingCurrentLib, tvGlobalLibName;
+    private String currentLibName = AppEngine.dictLibNames[0];
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -56,7 +57,8 @@ public class SettingFragment extends Fragment implements AdapterView.OnItemClick
         tvCleanLearning = (TextView) mainView.findViewById(R.id.tv_setting_clean_learn);
         tvCleanVerifying = (TextView) mainView.findViewById(R.id.tv_setting_clean_verify);
         tvSettingCurrentLib = (TextView) mainView.findViewById(R.id.tv_setting_setcurrentlib);
-
+        tvGlobalLibName = (TextView) mainView.findViewById(R.id.tv_global_lib_name);
+        tvGlobalLibName.setText(AppEngine.getInstance().getGlobalLibName());
 
         tvImport.setOnClickListener(this);
         tvExport.setOnClickListener(this);
@@ -94,6 +96,18 @@ public class SettingFragment extends Fragment implements AdapterView.OnItemClick
     }
 
     private void showDialog() {
-        new AlertDialog.Builder(getActivity()).setTitle("选择词库").setMultiChoiceItems(new String[]{"四级词汇", "六级词汇", "考研词汇"}, null, null).setPositiveButton("确定", null).setNegativeButton("取消", null).show();
+        new AlertDialog.Builder(getActivity()).setTitle("选择全局词库").setSingleChoiceItems(AppEngine.dictLibNames, -1, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                currentLibName = AppEngine.dictLibNames[which];
+            }
+        }).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                WinToast.toast(getActivity(), "设置成功!");
+                AppEngine.getInstance().setGlobalLibName(currentLibName);
+                tvGlobalLibName.setText(currentLibName);
+            }
+        }).setNegativeButton("取消", null).show();
     }
 }

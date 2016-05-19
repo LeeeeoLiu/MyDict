@@ -23,7 +23,7 @@ public class EasyDictWordsDao extends AbstractDao<EasyDictWords, Long> {
      * Can be used for QueryBuilder and for referencing column names.
     */
     public static class Properties {
-        public final static Property Id = new Property(0, long.class, "id", true, "_id");
+        public final static Property Id = new Property(0, Long.class, "id", true, "_id");
         public final static Property Name_lib = new Property(1, String.class, "name_lib", false, "NAME_LIB");
         public final static Property Name_words = new Property(2, String.class, "name_words", false, "NAME_WORDS");
         public final static Property Phonetic = new Property(3, String.class, "phonetic", false, "PHONETIC");
@@ -47,7 +47,7 @@ public class EasyDictWordsDao extends AbstractDao<EasyDictWords, Long> {
     public static void createTable(SQLiteDatabase db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"EASY_DICT_WORDS\" (" + //
-                "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL ," + // 0: id
+                "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
                 "\"NAME_LIB\" TEXT NOT NULL ," + // 1: name_lib
                 "\"NAME_WORDS\" TEXT NOT NULL ," + // 2: name_words
                 "\"PHONETIC\" TEXT," + // 3: phonetic
@@ -71,7 +71,11 @@ public class EasyDictWordsDao extends AbstractDao<EasyDictWords, Long> {
     @Override
     protected void bindValues(SQLiteStatement stmt, EasyDictWords entity) {
         stmt.clearBindings();
-        stmt.bindLong(1, entity.getId());
+ 
+        Long id = entity.getId();
+        if (id != null) {
+            stmt.bindLong(1, id);
+        }
         stmt.bindString(2, entity.getName_lib());
         stmt.bindString(3, entity.getName_words());
  
@@ -109,14 +113,14 @@ public class EasyDictWordsDao extends AbstractDao<EasyDictWords, Long> {
     /** @inheritdoc */
     @Override
     public Long readKey(Cursor cursor, int offset) {
-        return cursor.getLong(offset + 0);
+        return cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0);
     }    
 
     /** @inheritdoc */
     @Override
     public EasyDictWords readEntity(Cursor cursor, int offset) {
         EasyDictWords entity = new EasyDictWords( //
-            cursor.getLong(offset + 0), // id
+            cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
             cursor.getString(offset + 1), // name_lib
             cursor.getString(offset + 2), // name_words
             cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // phonetic
@@ -132,7 +136,7 @@ public class EasyDictWordsDao extends AbstractDao<EasyDictWords, Long> {
     /** @inheritdoc */
     @Override
     public void readEntity(Cursor cursor, EasyDictWords entity, int offset) {
-        entity.setId(cursor.getLong(offset + 0));
+        entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setName_lib(cursor.getString(offset + 1));
         entity.setName_words(cursor.getString(offset + 2));
         entity.setPhonetic(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));

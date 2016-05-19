@@ -1,5 +1,7 @@
 package com.leeeeo.mydict.models;
 
+import com.leeeeo.mydict.apps.AppEngine;
+
 import java.util.List;
 
 import de.greenrobot.dao.AbstractDao;
@@ -15,12 +17,20 @@ public abstract class BaseModelManager<T, K> {
     public String TAG = this.getClass().getSimpleName();
     AbstractDao<T, K> dao = null;
 
+    private Property globalLibName = null;
+
     public BaseModelManager(AbstractDao pDao) {
         this.dao = pDao;
+        Property p[] = dao.getProperties();
+        for (Property property : p) {
+            if (property.columnName.equalsIgnoreCase("name_lib")) {
+                this.globalLibName = property;
+            }
+        }
     }
 
     public QueryBuilder<T> queryBuilder() {
-        return dao.queryBuilder();
+        return dao.queryBuilder().where(globalLibName.eq(AppEngine.getInstance().getGlobalLibName()));
     }
 
     public void clear(WhereCondition whereCondition, WhereCondition... conditions) {
