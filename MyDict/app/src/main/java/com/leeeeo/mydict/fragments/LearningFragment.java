@@ -4,12 +4,14 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.leeeeo.mydict.R;
 import com.leeeeo.mydict.models.EasyDictWords;
@@ -28,7 +30,8 @@ public class LearningFragment extends Fragment implements AdapterView.OnItemClic
     private final static String TAG = LearningFragment.class.getSimpleName();
     private View mainView = null;
 
-    private EditText et_show_words, tv_content;
+    private EditText et_show_words;
+    private TextView tv_content;
     private Button btn_previous, btn_next, btn_random;
 
     private ArrayList<EasyDictWords> list = new ArrayList<>();
@@ -73,7 +76,7 @@ public class LearningFragment extends Fragment implements AdapterView.OnItemClic
 
 
         et_show_words = (EditText) mainView.findViewById(R.id.show_words);
-        tv_content = (EditText) mainView.findViewById(R.id.trans_result);
+        tv_content = (TextView) mainView.findViewById(R.id.trans_result);
     }
 
     public void refreshData() {
@@ -85,15 +88,23 @@ public class LearningFragment extends Fragment implements AdapterView.OnItemClic
         btn_random.setClickable(true);
         btn_next.setClickable(true);
         btn_previous.setClickable(true);
+
+        btn_next.setEnabled(true);
+        btn_random.setEnabled(true);
+        btn_previous.setEnabled(true);
+
+        
         if (list.size() <= pos || pos < 0) {
             return;
         }
         if (pos == 0) {
             btn_previous.setClickable(false);
+            btn_previous.setEnabled(false);
         }
 
         if (pos == list.size() - 1) {
             btn_next.setClickable(false);
+            btn_next.setEnabled(false);
         }
         tv_content.setText(Html.fromHtml(list.get(pos).getExplains()));
         et_show_words.setText(Html.fromHtml(list.get(pos).getName_words()));
@@ -102,6 +113,7 @@ public class LearningFragment extends Fragment implements AdapterView.OnItemClic
 
     @Override
     public void onClick(View v) {
+        Log.e("pos", "" + currentPosition + ":" + (list.size() - 1));
         switch (v.getId()) {
             case R.id.btn_next:
                 if (currentPosition == list.size() - 1) {
@@ -114,7 +126,7 @@ public class LearningFragment extends Fragment implements AdapterView.OnItemClic
 
                 break;
             case R.id.btn_previous:
-                if (currentPosition == list.size() - 1) {
+                if (currentPosition == 0) {
                     WinToast.toast(getActivity(), "已经是第一个了!");
                 } else {
                     currentPosition--;
