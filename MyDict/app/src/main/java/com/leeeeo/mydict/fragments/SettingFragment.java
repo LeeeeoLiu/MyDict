@@ -3,17 +3,19 @@ package com.leeeeo.mydict.fragments;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.leeeeo.mydict.R;
-import com.leeeeo.mydict.activities.ExportDictActivity;
 import com.leeeeo.mydict.activities.ImportDictActivity;
 import com.leeeeo.mydict.apps.AppEngine;
 import com.leeeeo.mydict.models.EasyDictWords;
@@ -21,6 +23,8 @@ import com.leeeeo.mydict.models.EasyDictWordsDao;
 import com.leeeeo.mydict.models.EasyDictWordsManager;
 import com.leeeeo.mydict.utils.WinToast;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.Iterator;
 import java.util.List;
 
@@ -37,6 +41,8 @@ public class SettingFragment extends Fragment implements AdapterView.OnItemClick
     private View mainView = null;
     private TextView tvImport, tvExport, tvCleanLearning, tvCleanVerifying, tvSettingCurrentLib, tvGlobalLibName;
     private String currentLibName = AppEngine.dictLibNames[0];
+
+    private String currentExportName = AppEngine.dictLibNames[0];
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -73,7 +79,7 @@ public class SettingFragment extends Fragment implements AdapterView.OnItemClick
         tvCleanLearning.setOnClickListener(this);
         tvSettingCurrentLib.setOnClickListener(this);
 
-        TextView textView = (TextView)mainView.findViewById(R.id.tv_setting_version);
+        TextView textView = (TextView) mainView.findViewById(R.id.tv_setting_version);
         textView.setText("EasyDict(Qinghe Tan) " + AppEngine.getInstance().getAppInfo());
 
     }
@@ -121,8 +127,7 @@ public class SettingFragment extends Fragment implements AdapterView.OnItemClick
 
                 break;
             case R.id.tv_setting_lib_export:
-                Intent exportIntent = new Intent(getActivity(), ExportDictActivity.class);
-                startActivity(exportIntent);
+                showExportDialog();
                 break;
             case R.id.tv_setting_lib_import:
                 Intent importIntent = new Intent(getActivity(), ImportDictActivity.class);
@@ -134,6 +139,23 @@ public class SettingFragment extends Fragment implements AdapterView.OnItemClick
             default:
                 break;
         }
+    }
+
+    private void showExportDialog() {
+        new AlertDialog.Builder(getActivity()).setTitle("选择全局词库").setSingleChoiceItems(AppEngine.dictLibNames, -1, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                currentExportName = AppEngine.dictLibNames[which];
+            }
+        }).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                WhereCondition whereCondition = EasyDictWordsDao.Properties.Name_lib.eq(currentExportName);
+                List<EasyDictWords> tmp_list = EasyDictWordsManager.getInstance().list(whereCondition);
+                new ExportAsyncTask().execute(tmp_list, null, null);
+
+            }
+        }).setNegativeButton("取消", null).show();
     }
 
     private void showDialog() {
@@ -150,5 +172,46 @@ public class SettingFragment extends Fragment implements AdapterView.OnItemClick
                 tvGlobalLibName.setText(currentLibName);
             }
         }).setNegativeButton("取消", null).show();
+    }
+
+    class ExportAsyncTask extends AsyncTask<List<EasyDictWords>, Integer, String> {
+        @Override
+        protected String doInBackground(List<EasyDictWords>... params) {
+            String jsonString = JSON.toJSONString(params);
+
+            File file = new File(AppEngine.getExportDir() + File.separator + currentExportName + ".txt");
+            if (!new File(file.getParent()).exists()) {
+                new File(file.getParent()).mkdirs();
+            }
+            try {
+                FileOutputStream outputStream = new FileOutputStream(file);
+                outputStream.write(jsonString.getBytes());
+                outputStream.close();
+                return "ok";
+            } catch (Exception e) {
+                e.printStackTrace();
+                return e.getMessage();
+            }
+
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+            if (TextUtils.isEmpty(s)) {
+                WinToast.toast(getActivity(), "导出失败:");
+            }
+
+            if (s.equalsIgnoreCase("ok")) {
+                WinToast.toast(getActivity(), "导出成功");
+            } else {
+                WinToast.toast(getActivity(), "导出失败:" + s);
+            }
+        }
+
+        //
+
+
     }
 }
