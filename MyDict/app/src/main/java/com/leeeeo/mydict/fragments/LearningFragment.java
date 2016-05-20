@@ -93,7 +93,14 @@ public class LearningFragment extends Fragment implements AdapterView.OnItemClic
         btn_random.setEnabled(true);
         btn_previous.setEnabled(true);
 
-        
+        if (list.size() <= 0) {
+            btn_next.setEnabled(false);
+            btn_random.setEnabled(false);
+            btn_previous.setEnabled(false);
+            WinToast.toast(getActivity(), "当前词库中没有词汇,请先添加/导入/切换词库");
+            return;
+        }
+
         if (list.size() <= pos || pos < 0) {
             return;
         }
