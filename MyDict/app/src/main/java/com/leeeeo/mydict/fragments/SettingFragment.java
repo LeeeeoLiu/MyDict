@@ -72,13 +72,17 @@ public class SettingFragment extends Fragment implements AdapterView.OnItemClick
         tvCleanVerifying.setOnClickListener(this);
         tvCleanLearning.setOnClickListener(this);
         tvSettingCurrentLib.setOnClickListener(this);
+
+        TextView textView = (TextView)mainView.findViewById(R.id.tv_setting_version);
+        textView.setText("EasyDict(Qinghe Tan) " + AppEngine.getInstance().getAppInfo());
+
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_setting_clean_learn:
-                new AlertDialog.Builder(getActivity()).setTitle("确定清空").setMessage("清空后,学习数据都没有啰?").setPositiveButton("取消", new DialogInterface.OnClickListener() {
+                new AlertDialog.Builder(getActivity()).setTitle("确定清空").setMessage("清空后,学习数据都没有啰?").setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         WhereCondition whereCondition = EasyDictWordsDao.Properties.Islearn.eq(true);
