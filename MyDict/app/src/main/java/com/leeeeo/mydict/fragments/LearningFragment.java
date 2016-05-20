@@ -8,19 +8,31 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.TextView;
+import android.widget.Button;
+import android.widget.EditText;
 
 import com.leeeeo.mydict.R;
+import com.leeeeo.mydict.models.EasyDictWords;
+import com.leeeeo.mydict.models.EasyDictWordsManager;
+import com.leeeeo.mydict.utils.WinToast;
+
+import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Created by Jacob on 16/5/16.
  * Email:Jacob.Deng@about-bob.com
  */
-public class LearningFragment extends Fragment implements AdapterView.OnItemClickListener {
+public class LearningFragment extends Fragment implements AdapterView.OnItemClickListener, View.OnClickListener {
 
     private final static String TAG = LearningFragment.class.getSimpleName();
     private View mainView = null;
-    private TextView tv_content = null;
+
+    private EditText et_show_words, tv_content;
+    private Button btn_previous, btn_next, btn_random;
+
+    private ArrayList<EasyDictWords> list = new ArrayList<>();
+    private int currentPosition = 0;
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -30,6 +42,7 @@ public class LearningFragment extends Fragment implements AdapterView.OnItemClic
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     @Nullable
@@ -37,20 +50,85 @@ public class LearningFragment extends Fragment implements AdapterView.OnItemClic
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mainView = inflater.inflate(R.layout.fragment_learning, container, false);
         initSubViews();
+        init();
+        refreshData();
         return mainView;
 
     }
 
+    private void init() {
+        list.clear();
+        list.addAll(EasyDictWordsManager.getInstance().list());
+
+    }
+
     private void initSubViews() {
-        tv_content = (TextView) mainView.findViewById(R.id.trans_result);
-        tv_content.setText(Html.fromHtml("<h1>hello</h1><hr><br/>英[hə'ləʊ]<br/><br/>" +
-                        "美[həˈloʊ]<br/><br/>" +
-                        "int.  打招呼; 哈喽，喂; 你好，您好; 表示问候;<br/><br/>" +
-                        "n. “喂”的招呼声或问候声;<br/><br/>" +
-                        "vi. 喊“喂”;<br/><br/>" +
-                        "[例句]Hello, Trish.<br/><br/>" +
-                        "你好，特里茜。<br/><br/>" +
-                        "[其他]  复数：hellos<br/><br/>"
-        ));
+        btn_previous = (Button) mainView.findViewById(R.id.btn_previous);
+        btn_next = (Button) mainView.findViewById(R.id.btn_next);
+        btn_random = (Button) mainView.findViewById(R.id.btn_random);
+
+        btn_random.setOnClickListener(this);
+        btn_next.setOnClickListener(this);
+        btn_previous.setOnClickListener(this);
+
+
+        et_show_words = (EditText) mainView.findViewById(R.id.show_words);
+        tv_content = (EditText) mainView.findViewById(R.id.trans_result);
+    }
+
+    public void refreshData() {
+        init();
+        showPosition(currentPosition);
+    }
+
+    public void showPosition(int pos) {
+        btn_random.setClickable(true);
+        btn_next.setClickable(true);
+        btn_previous.setClickable(true);
+        if (list.size() <= pos || pos < 0) {
+            return;
+        }
+        if (pos == 0) {
+            btn_previous.setClickable(false);
+        }
+
+        if (pos == list.size() - 1) {
+            btn_next.setClickable(false);
+        }
+        tv_content.setText(Html.fromHtml(list.get(pos).getExplains()));
+        et_show_words.setText(Html.fromHtml(list.get(pos).getName_words()));
+    }
+
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_next:
+                if (currentPosition == list.size() - 1) {
+                    WinToast.toast(getActivity(), "已经是最后一个了!");
+                } else {
+                    currentPosition++;
+
+                    refreshData();
+                }
+
+                break;
+            case R.id.btn_previous:
+                if (currentPosition == list.size() - 1) {
+                    WinToast.toast(getActivity(), "已经是第一个了!");
+                } else {
+                    currentPosition--;
+                    refreshData();
+                }
+                break;
+            case R.id.btn_random:
+                int tmp_pos = new Random().nextInt(list.size() - 1);
+                if (tmp_pos == currentPosition) {
+                    tmp_pos = new Random().nextInt(list.size() - 1);
+                }
+                currentPosition = tmp_pos;
+                refreshData();
+                break;
+        }
     }
 }

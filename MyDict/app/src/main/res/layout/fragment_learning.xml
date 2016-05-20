@@ -3,6 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+    <EditText
+        android:id="@+id/show_words"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="38dp"
+        android:editable="false"
+        android:hint="输入你要查询的内容......" />
 
     <EditText
         android:id="@+id/trans_result"
