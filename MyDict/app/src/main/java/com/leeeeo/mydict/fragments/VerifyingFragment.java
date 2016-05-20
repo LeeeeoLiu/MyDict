@@ -20,8 +20,6 @@ import com.leeeeo.mydict.models.EasyDictWords;
 import com.leeeeo.mydict.models.EasyDictWordsManager;
 import com.leeeeo.mydict.utils.WinToast;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -44,6 +42,7 @@ public class VerifyingFragment extends Fragment implements AdapterView.OnItemCli
     private EditText question_words;
     private RadioGroup radioGroup;
     private int[] arr = new int[4];
+    private int[] pos_arr = new int[4];
 
 
     @Override
@@ -61,6 +60,8 @@ public class VerifyingFragment extends Fragment implements AdapterView.OnItemCli
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mainView = inflater.inflate(R.layout.activity_exam, container, false);
         initSubViews();
+        radioGroup.setOnCheckedChangeListener(mChangeRadio);
+
 
         return mainView;
     }
@@ -81,13 +82,13 @@ public class VerifyingFragment extends Fragment implements AdapterView.OnItemCli
         btn_next.setOnClickListener(this);
         btn_previous.setOnClickListener(this);
 
+        btn_previous.setEnabled(false);
+
         radioButtons[0] = (RadioButton) mainView.findViewById(R.id.answerA);
         radioButtons[1] = (RadioButton) mainView.findViewById(R.id.answerB);
         radioButtons[2] = (RadioButton) mainView.findViewById(R.id.answerC);
         radioButtons[3] = (RadioButton) mainView.findViewById(R.id.answerD);
 
-        radioGroup.setOnCheckedChangeListener(mChangeRadio);
-//        tv_content = (TextView) mainView.findViewById(R.id.trans_result);
     }
 
     private RadioGroup.OnCheckedChangeListener mChangeRadio = new RadioGroup.OnCheckedChangeListener() {
@@ -96,8 +97,6 @@ public class VerifyingFragment extends Fragment implements AdapterView.OnItemCli
             if (checkedId == radioButtons[arr[0]].getId()) {
                 WinToast.toast(getActivity(), "回答正确！请点击“下一题");
                 btn_next.setEnabled(true);
-            } else {
-                WinToast.toast(getActivity(), "回答错误！");
             }
         }
     };
@@ -133,29 +132,17 @@ public class VerifyingFragment extends Fragment implements AdapterView.OnItemCli
             btn_next.setClickable(false);
             btn_next.setEnabled(false);
         }
-//        radioButtons[0].setText(q.answerA);
-//        radioButtons[1].setText(q.answerB);
-//        radioButtons[2].setText(q.answerC);
-//        radioButtons[3].setText(q.answerD);
 
         int right_answer = new Random().nextInt(4);
         Log.e("random", "random:" + right_answer);
-
         arr[0] = new Random().nextInt(4);
         int i = 1;
-        //外循环定义四个数
         while (i <= 3) {
             int x = new Random().nextInt(4);
-            /*内循环：新生成随机数和已生成的比较，
-             *相同则跳出内循环，再生成一个随机数进行比较
-             *和前几个生成的都不同则这个就是新的随机数
-            */
             for (int j = 0; j <= i - 1; j++) {
-                //相同则跳出内循环，再生成一个随机数进行比较
                 if (arr[j] == x) {
                     break;
                 }
-                //执行完循环和前几个生成的都不同则这个就是新的随机数
                 if (j + 1 == i) {
                     arr[i] = x;
                     i++;
@@ -163,14 +150,23 @@ public class VerifyingFragment extends Fragment implements AdapterView.OnItemCli
             }
         }
         radioButtons[arr[0]].setText(Html.fromHtml(list.get(pos).getExplains()));
-        String answer;
-        int tmp_pos = new Random().nextInt(list.size() - 1);
-        answer=list.get(tmp_pos).getExplains();
-        radioButtons[arr[1]].setText(Html.fromHtml(list.get(tmp_pos).getExplains()));
-        tmp_pos = new Random().nextInt(list.size() - 1);
-        radioButtons[arr[2]].setText(Html.fromHtml(list.get(tmp_pos).getExplains()));
-        tmp_pos = new Random().nextInt(list.size() - 1);
-        radioButtons[arr[3]].setText(Html.fromHtml(list.get(tmp_pos).getExplains()));
+        pos_arr[0] = pos;
+        i = 1;
+        while (i <= 3) {
+            int tmp_pos = new Random().nextInt(list.size() - 1);
+            for (int j = 0; j <= i - 1; j++) {
+                if (pos_arr[j] == tmp_pos) {
+                    break;
+                }
+                if (j + 1 == i) {
+                    pos_arr[i] = tmp_pos;
+                    i++;
+                }
+            }
+        }
+        radioButtons[arr[1]].setText(Html.fromHtml(list.get(pos_arr[1]).getExplains()));
+        radioButtons[arr[2]].setText(Html.fromHtml(list.get(pos_arr[2]).getExplains()));
+        radioButtons[arr[3]].setText(Html.fromHtml(list.get(pos_arr[3]).getExplains()));
         question_words.setText(Html.fromHtml(list.get(pos).getName_words()));
     }
 
@@ -189,12 +185,14 @@ public class VerifyingFragment extends Fragment implements AdapterView.OnItemCli
         switch (v.getId()) {
             case R.id.btn_next:
                 btn_next.setText("下一题");
+                btn_previous.setEnabled(true);
                 if (currentPosition == list.size() - 1) {
                     WinToast.toast(getActivity(), "已经是最后一个了!");
                 } else {
-                    currentPosition++;
                     radioGroup.clearCheck();
+                    currentPosition++;
                     refreshData();
+                    btn_next.setEnabled(false);
                 }
 
                 break;
