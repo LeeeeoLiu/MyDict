@@ -16,8 +16,15 @@ import com.leeeeo.mydict.R;
 import com.leeeeo.mydict.activities.ExportDictActivity;
 import com.leeeeo.mydict.activities.ImportDictActivity;
 import com.leeeeo.mydict.apps.AppEngine;
+import com.leeeeo.mydict.models.EasyDictWords;
+import com.leeeeo.mydict.models.EasyDictWordsDao;
 import com.leeeeo.mydict.models.EasyDictWordsManager;
 import com.leeeeo.mydict.utils.WinToast;
+
+import java.util.Iterator;
+import java.util.List;
+
+import de.greenrobot.dao.query.WhereCondition;
 
 /**
  * Created by Jacob on 16/5/16.
@@ -71,13 +78,43 @@ public class SettingFragment extends Fragment implements AdapterView.OnItemClick
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_setting_clean_learn:
-                EasyDictWordsManager.getInstance().clear();
-                WinToast.toast(AppEngine.getInstance().getCurrentContext(), "清除学习历史成功");
+                new AlertDialog.Builder(getActivity()).setTitle("确定清空").setMessage("清空后,学习数据都没有啰?").setPositiveButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        WhereCondition whereCondition = EasyDictWordsDao.Properties.Islearn.eq(true);
+                        List<EasyDictWords> tmpList = EasyDictWordsManager.getInstance().list(whereCondition);
+
+                        Iterator<EasyDictWords> iterator = tmpList.iterator();
+                        while (iterator.hasNext()) {
+                            EasyDictWords easyDictWords = iterator.next();
+                            easyDictWords.setIslearn(false);
+                        }
+
+                        EasyDictWordsManager.getInstance().updateForce(tmpList);
+                        WinToast.toast(AppEngine.getInstance().getCurrentContext(), "清除学习历史成功");
+                    }
+                }).setNegativeButton("取消", null).show();
+
                 break;
             case R.id.tv_setting_clean_verify:
                 //WhereCondition whereCondition = EasyDictWordsDao.Properties.
-                EasyDictWordsManager.getInstance().clear();
-                WinToast.toast(AppEngine.getInstance().getCurrentContext(), "清除测试历史成功");
+                new AlertDialog.Builder(getActivity()).setTitle("确定清空").setMessage("清空后,测试数据都没有啰?").setPositiveButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        WhereCondition whereCondition = EasyDictWordsDao.Properties.Islearn.eq(true);
+                        List<EasyDictWords> tmpList = EasyDictWordsManager.getInstance().list(whereCondition);
+
+                        Iterator<EasyDictWords> iterator = tmpList.iterator();
+                        while (iterator.hasNext()) {
+                            EasyDictWords easyDictWords = iterator.next();
+                            easyDictWords.setIslearn(false);
+                        }
+
+                        EasyDictWordsManager.getInstance().updateForce(tmpList);
+                        WinToast.toast(AppEngine.getInstance().getCurrentContext(), "清除测试历史成功");
+                    }
+                }).setNegativeButton("取消", null).show();
+
                 break;
             case R.id.tv_setting_lib_export:
                 Intent exportIntent = new Intent(getActivity(), ExportDictActivity.class);
