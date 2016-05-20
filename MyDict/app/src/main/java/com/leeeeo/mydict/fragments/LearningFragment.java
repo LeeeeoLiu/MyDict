@@ -120,7 +120,16 @@ public class LearningFragment extends Fragment implements AdapterView.OnItemClic
 
     @Override
     public void onClick(View v) {
+        init();
         Log.e("pos", "" + currentPosition + ":" + (list.size() - 1));
+        if (list.size() <= 0) {
+            btn_next.setEnabled(false);
+            btn_random.setEnabled(false);
+            btn_previous.setEnabled(false);
+            WinToast.toast(getActivity(), "当前词库中没有词汇,请先添加/导入/切换词库");
+            return;
+        }
+
         switch (v.getId()) {
             case R.id.btn_next:
                 if (currentPosition == list.size() - 1) {
