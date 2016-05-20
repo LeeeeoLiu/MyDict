@@ -26,12 +26,15 @@
             android:id="@+id/tv_global_lib_name"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
             android:gravity="center_vertical|center_horizontal"
-            android:text="四级词汇" />
+            android:text="四级词汇"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="italic"/>
     </LinearLayout>
 
     <TextView
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="5dp"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@color/colorPrimary" />
@@ -105,7 +108,7 @@
     </LinearLayout>
 
     <TextView
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="5dp"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@color/colorPrimary"  />
@@ -129,7 +132,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
 
         android:gravity="center_vertical|center_horizontal"

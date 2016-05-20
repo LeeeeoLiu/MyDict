@@ -94,5 +94,16 @@ public class AppEngine {
         return getExternalBaseDir() + File.separator + "export" + File.separator;
     }
 
-
+    public String getAppInfo() {
+        try {
+            String pkName = this.aplicationContext.getPackageName();
+            String versionName = this.aplicationContext.getPackageManager().getPackageInfo(
+                    pkName, 0).versionName;
+            int versionCode = this.aplicationContext.getPackageManager()
+                    .getPackageInfo(pkName, 0).versionCode;
+            return "v" + versionName + "(" + versionCode + ")";
+        } catch (Exception e) {
+        }
+        return null;
+    }
 }

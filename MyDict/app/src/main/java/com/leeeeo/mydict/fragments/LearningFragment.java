@@ -150,12 +150,16 @@ public class LearningFragment extends Fragment implements AdapterView.OnItemClic
                 }
                 break;
             case R.id.btn_random:
-                int tmp_pos = new Random().nextInt(list.size() - 1);
-                if (tmp_pos == currentPosition) {
-                    tmp_pos = new Random().nextInt(list.size() - 1);
+                if (list.size() > 1) {
+
+
+                    int tmp_pos = new Random().nextInt(list.size() - 1);
+                    if (tmp_pos == currentPosition) {
+                        tmp_pos = new Random().nextInt(list.size() - 1);
+                    }
+                    currentPosition = tmp_pos;
+                    refreshData();
                 }
-                currentPosition = tmp_pos;
-                refreshData();
                 break;
         }
     }

@@ -3,8 +3,10 @@ package com.leeeeo.mydict.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.widget.TextView;
 
 import com.leeeeo.mydict.R;
+import com.leeeeo.mydict.apps.AppEngine;
 import com.leeeeo.mydict.apps.BaseActivity;
 
 /**
@@ -26,5 +28,9 @@ public class SplashActivity extends BaseActivity {
                 SplashActivity.this.finish();
             }
         }, 2000);
+
+        TextView textView = (TextView) findViewById(R.id.textView3);
+        textView.setText("EasyDict(Qinghe Tan) " + AppEngine.getInstance().getAppInfo());
+
     }
 }
